@@ -13,7 +13,7 @@ quiet-command = $(if $(v),$1,$(if $(2),@echo $2 && $1, @$1))
 all:$(TARGETS)
 
 %: %.c
-	$(call quiet-command,$(CC) $(INCLUDES) $(CFLAGS) $(DFLAGS) -o $@ $@.c `pkg-config --cflags --libs gtk+-3.0`,"  LINK  $@")
+	$(CC) $(INCLUDES) $(CFLAGS) $(DFLAGS) -o $@ $@.c `pkg-config --cflags --libs gtk+-3.0`
 
 .PHONY:all clean
 clean:
