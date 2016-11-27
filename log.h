@@ -1,6 +1,8 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <stdio.h>
+
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 #define LOG(fmt, ...)	\
