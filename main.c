@@ -1,10 +1,11 @@
 
 #include <stdio.h>
+#include "log.h"
 
 int main(int argc, char** argv)
 {
-    printf("Hello World!\n");
-    printf("This line add at GitHub\n");
-	printf("today is web\n");
+    LOG("Hello World!");
+    LOG("This line add at GitHub");
+	LOG("today is web");
 }
 

@@ -12,8 +12,8 @@ quiet-command = $(if $(v),$1,$(if $(2),@echo $2 && $1, @$1))
 
 all:$(TARGETS)
 
-%: %.c
-	$(CC) $(INCLUDES) $(CFLAGS) $(DFLAGS) -o $@ $@.c `pkg-config --cflags --libs gtk+-3.0`
+$(TARGETS): $(SOURCES)
+	$(CC) $(INCLUDES) $(CFLAGS) $(DFLAGS) -o $@ $^ $(LD_FLAGS)
 
 .PHONY:all clean
 clean:
