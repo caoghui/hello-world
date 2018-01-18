@@ -9,15 +9,34 @@
 using namespace std;
 using namespace std::chrono;
 
+void thd_func()
+{    
+    LOG_R_I("Log_R print!");
+    cout << this_thread::get_id() << endl;
+    this_thread::sleep_for(chrono::seconds(3));
+}
+
+
+
 int main(int argc, char** argv)
 {
     //LOG_I("Hello World!");
-    LOG_R("Log_R print!");
-    LOG_R("this is %d line", __LINE__);
+    //thread thd(thd_func);
+    //thd.join();
+
+    LOG_R_I("this is %d line", __LINE__);
+
+    LOG_R_D("this is a log level debug");
     
-    MSG("this is a simple msg");
-    MSG("this is "<<4<<" msg");
-    MSG("the thread id is " << std::this_thread::get_id() << " is running ");
+    LOG_D("this is a simple msg");
+    LOG_D("this is "<<4<<" msg");
+    LOG_D("the thread id is " << std::this_thread::get_id() << " is running ");
+    
+    LOG_R_I("this is a info msg");
+    LOG_R_D("this is a debug msg");
+    LOG_R_W("this is a warn msg");
+    LOG_R_E("this is a error msg");
+    cout << endl;
     /*
     
     auto t = chrono::system_clock::to_time_t(std::chrono::system_clock::now());
