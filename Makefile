@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -fPIC -std=c++11
 DFLAGS=
 LD_FLAGS=
-INCLUDES=
+INCLUDES=-I.
 
 #gcc -o Helloworld hellogtk.c `pkg-config --cflags --libs gtk+-3.0`
 
@@ -12,8 +12,9 @@ quiet-command = $(if $(v),$1,$(if $(2),@echo $2 && $1, @$1))
 
 all:$(TARGETS)
 
-$(TARGETS): $(SOURCES)
-	$(CC) $(INCLUDES) $(CFLAGS) $(DFLAGS) -o $@ $^ $(LD_FLAGS)
+%: %.cpp
+	$(CC) $(INCLUDES) $(CFLAGS) $(DFLAGS) -o $@ $@.cpp $(LD_FLAGS)
+
 
 .PHONY:all clean
 clean:

@@ -59,7 +59,7 @@ bool CSyncQueue<typename T>::put(const T& val, std::chrono::steady_clock::durati
 		m_cond.notify_one();
 		return true;
 	}
-	//��ʱ
+	//
 	m_cond.notify_all();
 	return false;
 }

@@ -25,6 +25,7 @@ LOG4CPP_LOGGER("Root")
 
 #include <cstdio>
 #include <chrono>
+#include <iomanip>
 #include <thread>
 #include <sstream>
 #include <ctime>

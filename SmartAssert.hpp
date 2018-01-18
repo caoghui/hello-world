@@ -44,9 +44,9 @@ public:
 Assert make_assert(const char* expr);
 
 /*
-ÈçºÎÀí½âÕâ¸ö¼¼ÇÉ£ºµ±Ô¤´¦ÀíÆ÷¿´µ½SMART_ASSERT_A(»ò_B)ºóÃæ¸ú×ÅÒ»¶ÔÀ¨ºÅÊ±£¬Ëü¾Í½«
-Õâ¸öµ±³É¶ÔºêµÄµ÷ÓÃÀ´¶Ô´ı¡£Èç¹ûÃ»ÓĞÀ¨ºÅ£¬Ô¤´¦ÀíÆ÷¾Í¼òµ¥µØ½«Õâ¸ö·ûºÅÈÔÈ»ÁôÔÚÄÇÀï¡£¶ø
-ÔÚºóÒ»ÖÖÇé¿öÏÂ£¬·ûºÅSMART_ASSERT_A(»ò_B)Ö»ÊÇ´ú±í³ÉÔ±±äÁ¿¡£
+å¦‚ä½•ç†è§£è¿™ä¸ªæŠ€å·§ï¼šå½“é¢„å¤„ç†å™¨çœ‹åˆ°SMART_ASSERT_A(æˆ–_B)åé¢è·Ÿç€ä¸€å¯¹æ‹¬å·æ—¶ï¼Œå®ƒå°±å°†
+è¿™ä¸ªå½“æˆå¯¹å®çš„è°ƒç”¨æ¥å¯¹å¾…ã€‚å¦‚æœæ²¡æœ‰æ‹¬å·ï¼Œé¢„å¤„ç†å™¨å°±ç®€å•åœ°å°†è¿™ä¸ªç¬¦å·ä»ç„¶ç•™åœ¨é‚£é‡Œã€‚è€Œ
+åœ¨åä¸€ç§æƒ…å†µä¸‹ï¼Œç¬¦å·SMART_ASSERT_A(æˆ–_B)åªæ˜¯ä»£è¡¨æˆå‘˜å˜é‡ã€‚
 */
 #define SMART_ASSERT_OP(x, next)\
     SMART_ASSERT_A.print_current_val(#x, (x)).SMART_ASSERT_##next
@@ -59,3 +59,52 @@ Assert make_assert(const char* expr);
     else make_assert(#expr).print_context(__FILE__, __LINE__).SMART_ASSERT_A
 
 
+#ifdef _MSC_VER
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
+#include <windows.h>
+#include <Dbghelp.h>
+#pragma comment(lib, "Dbghelp.lib")
+
+std::string demangle(const std::string& name)
+{
+	char buffer[1024];
+	memset(buffer, 0, sizeof(buffer));
+	DWORD length = UnDecorateSymbolName(name.c_str(), buffer, sizeof(buffer), 0);
+	if (length > 0)
+		return std::string(buffer, length);
+	else
+		return name;
+}
+
+#elif defined __GNUC__
+#include <cxxabi.h>
+std::string demangle(const std::string& name)
+{
+	size_t funcnamesize = 1;
+	char* funcname = static_cast<char*>(malloc(funcnamesize));
+	int status;
+	char* ret = abi::__cxa_demangle(name.c_str(), funcname, &funcnamesize, &status);
+	if (0 == status)
+	{
+		//demangle success
+		std::string result(ret);
+		free(ret);
+		return result;
+	}
+	else
+	{
+		//demangle fail
+		free(funcname);
+		return name;
+	}
+}
+#endif
+
+
+Assert make_assert(const char* expr)
+{
+	return Assert(expr);
+}
