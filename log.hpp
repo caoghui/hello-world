@@ -29,7 +29,7 @@ LOG4CPP_LOGGER("Root")
 #include <thread>
 #include <sstream>
 #include <ctime>
-
+#if 0
 const char* _func_log_print(const char* func, const int line, const char* tag, ...)
 {
     auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -39,7 +39,7 @@ const char* _func_log_print(const char* func, const int line, const char* tag, .
     ss << "[" << func<<":"<<line<<"] =>: ";
     return ss.str().c_str();
 }
-
+#endif
 #define _log_printf(func, line, tag, fmt,...) do{\
 	auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());\
     std::stringstream ss; \
@@ -73,7 +73,7 @@ const char* _func_log_print(const char* func, const int line, const char* tag, .
 #define LOG_E(msg) LOG("ERROR", msg)
 #define LOG_F(msg) LOG("FATAL", msg)
 
-/*
+#if 0
 #define LOG(fmt, ...) do{\
 	fprintf(stderr, __FILE__ ":" STR(__LINE__) "] =>: " fmt "\n", ##__VA_ARGS__);\
 	fflush(stderr);\
@@ -91,6 +91,6 @@ const char* _func_log_print(const char* func, const int line, const char* tag, .
 
 #define ERR(fmt, ...) \
 	fprintf(stderr, "Error: " __FILE__ ":" STR(__LINE__) " " fmt "\n", ##__VA_ARGS__)
-*/
+#endif
 
 #endif

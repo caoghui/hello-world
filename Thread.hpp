@@ -15,24 +15,13 @@ private:
 	bool is_stopped;
 public:
 	CThread():is_stopped(false) { }
-	virtual ~CThread();
+	virtual ~CThread(){ }
 	const char* name()const { return typeid(*this).name(); }
 	//
 	int start()
 	{
-#ifdef THREAD_TEST
-		cout << "CThread::start a1: " << m_thread.get_id() << endl;
-		this_thread::sleep_for(std::chrono::seconds(2));
-		cout << "CThread::start a2: " << this_thread::get_id() << endl;
-#endif
 		std::thread tmp{ CThread::run, this };
 		m_thread = move(tmp);
-#ifdef THREAD_TEST
-		this_thread::sleep_for(std::chrono::seconds(2));
-		cout << "CThread::start b3: " << m_thread.get_id() << endl;
-		this_thread::sleep_for(std::chrono::seconds(2));
-		cout << "CThread::start b4: " << this_thread::get_id() << endl;
-#endif
 		return 0;
 	}
 	void stop()
@@ -76,10 +65,10 @@ public:
 		std::this_thread::sleep_for(std::chrono::seconds(sec));
 	}
 
-	//�������ظ÷�����ʵ���Լ�������
-#ifndef THREAD_TEST
+	//
+
 	virtual int work() = 0;
-#else
+#if 0
 	virtual int work()
 	{
 		this_thread::sleep_for(std::chrono::seconds(8));
