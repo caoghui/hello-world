@@ -6,8 +6,11 @@
 #include <sstream>
 #include <ctime>
 #include "log.hpp"
+#include "ScopeGuard.hpp"
 using namespace std;
 using namespace std::chrono;
+
+void test_scope();
 
 void thd_func()
 {    
@@ -15,8 +18,6 @@ void thd_func()
     cout << this_thread::get_id() << endl;
     this_thread::sleep_for(chrono::seconds(3));
 }
-
-
 
 int main(int argc, char** argv)
 {
@@ -36,9 +37,10 @@ int main(int argc, char** argv)
     LOG_R_D("this is a debug msg");
     LOG_R_W("this is a warn msg");
     LOG_R_E("this is a error msg");
-    cout << endl;
-    /*
-    
+
+    test_scope();
+
+    /*    
     auto t = chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     stringstream ss; ss << std::put_time(std::localtime(&t), "[%Y-%m-%d %X]");
     ss << "[" << std::this_thread::get_id() << "][DEBUG]";
@@ -54,3 +56,7 @@ int main(int argc, char** argv)
     //*/
 }
 
+void test_scope()
+{
+    ON_SCOPE_EXIT([](){ cout << " scope exit" << endl;});
+}

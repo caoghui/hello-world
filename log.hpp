@@ -24,12 +24,10 @@ LOG4CPP_LOGGER("Root")
 #else
 
 #include <cstdio>
-#include <cstring>
 #include <chrono>
 #include <thread>
 #include <sstream>
 #include <ctime>
-#include <string>
 
 const char* _func_log_print(const char* func, const int line, const char* tag, ...)
 {
