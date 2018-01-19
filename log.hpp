@@ -8,9 +8,9 @@
 //使用log4cpp
 #ifdef USR_LOG4CPP
 
-#include "log4cpp/Category.hh"
-#include "log4cpp/CategoryStream.hh"
-#include "log4cpp/PropertyConfigurator.hh"
+#include <log4cpp/Category.hh>
+#include <log4cpp/CategoryStream.hh>
+#include <log4cpp/PropertyConfigurator.hh>
 using namespace log4cpp;
 
 LOG4CPP_LOGGER("Root")
@@ -27,6 +27,7 @@ LOG4CPP_LOGGER("Root")
 #include <chrono>
 #include <iomanip>
 #include <thread>
+#include <string>
 #include <sstream>
 #include <ctime>
 #if 0

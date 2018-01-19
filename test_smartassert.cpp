@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 #include "log.hpp"
 #include "SmartAssert.hpp"
 
